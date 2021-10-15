@@ -8,4 +8,6 @@
     <string name="search_placeholder">Search</string>
 
     <string name="generic_close_btn">Close Button</string>
+    <string name="sad_face_desc">Sad Face Icon</string>
+    <string name="empty_content">No tasks found.</string>
 </resources>
