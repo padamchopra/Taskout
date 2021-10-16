@@ -4,11 +4,9 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
@@ -17,20 +15,34 @@ import androidx.compose.ui.tooling.preview.Preview
 import me.padamchopra.todocompose.data.models.Priority
 import me.padamchopra.todocompose.data.models.ToDoTask
 import me.padamchopra.todocompose.ui.theme.*
+import me.padamchopra.todocompose.util.RequestState
 
 @ExperimentalMaterialApi
 @Composable
 fun ListContent(
-    tasks: List<ToDoTask>,
+    tasks: RequestState<List<ToDoTask>>,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
-    if (tasks.isEmpty()) {
-        EmptyContent()
-    } else {
-        TasksList(
-            tasks = tasks,
-            navigateToTaskScreen = navigateToTaskScreen
-        )
+    when (tasks) {
+        is RequestState.Success -> {
+            if (tasks.data.isEmpty()) {
+                EmptyContent()
+            } else {
+                TasksList(
+                    tasks = tasks.data,
+                    navigateToTaskScreen = navigateToTaskScreen
+                )
+            }
+        }
+        else -> {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        }
     }
 }
 
