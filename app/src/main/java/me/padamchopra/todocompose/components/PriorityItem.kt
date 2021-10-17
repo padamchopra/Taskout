@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import me.padamchopra.todocompose.data.models.Priority
 import me.padamchopra.todocompose.ui.theme.LARGE_PADDING
 import me.padamchopra.todocompose.ui.theme.PRIORITY_INDICATOR_SIZE
+import me.padamchopra.todocompose.ui.theme.ToDoComposeTheme
 
 @Composable
 fun PriorityItem(priority: Priority) {
@@ -33,4 +34,12 @@ fun PriorityItem(priority: Priority) {
 @Preview
 fun PriorityItemPreview() {
     PriorityItem(priority = Priority.LOW)
+}
+
+@Composable
+@Preview
+fun PriorityItemPreviewDark() {
+    ToDoComposeTheme(darkTheme = true) {
+        PriorityItemPreview()
+    }
 }

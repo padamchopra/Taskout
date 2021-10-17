@@ -1,16 +1,21 @@
 package me.padamchopra.todocompose.navigation.destinations
 
 import android.util.Log
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import me.padamchopra.todocompose.ui.screens.task.TaskScreen
+import me.padamchopra.todocompose.ui.viewmodels.SharedViewModel
 import me.padamchopra.todocompose.util.Action
 import me.padamchopra.todocompose.util.Constants.TASK_ARGUMENT_KEY
 import me.padamchopra.todocompose.util.Constants.TASK_SCREEN
 
 fun NavGraphBuilder.taskComposable(
+    sharedViewModel: SharedViewModel,
     navigateToListScreen: (Action) -> Unit
 ) {
     composable(
@@ -20,8 +25,17 @@ fun NavGraphBuilder.taskComposable(
         )
     ) { navBackStackEntry ->
         val taskId = navBackStackEntry.arguments!!.getInt(TASK_ARGUMENT_KEY)
-        Log.d("TaskComposable", "Opening task screen for task id: $taskId")
+        sharedViewModel.getSelectedTask(taskId = taskId)
+        val selectedTask by sharedViewModel.selectedTask.collectAsState()
         
-        TaskScreen(navigateToListScreen = navigateToListScreen)
+        LaunchedEffect(key1 = taskId) {
+            sharedViewModel.updateTaskFields(selectedTask = selectedTask)
+        }
+
+        TaskScreen(
+            sharedViewModel = sharedViewModel,
+            selectedTask = selectedTask,
+            navigateToListScreen = navigateToListScreen
+        )
     }
 }

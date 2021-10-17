@@ -42,3 +42,7 @@ val Colors.taskItemTextColor: Color
 val Colors.MediumEmphasisContentColor: Color
     @Composable
     get() = MediumGray
+
+val Colors.contentColor: Color
+    @Composable
+    get() = if (isLight) Color.Black else Color.White

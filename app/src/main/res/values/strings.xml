@@ -11,4 +11,10 @@
     <string name="back_button">Go Back Button</string>
     <string name="sad_face_desc">Sad Face Icon</string>
     <string name="empty_content">No tasks found.</string>
+    <string name="delete_btn">Delete Icon</string>
+    <string name="update_btn">Update Icon</string>
+    <string name="more_options_btn">More Options Button</string>
+
+    <string name="title">Title</string>
+    <string name="description">Description</string>
 </resources>
