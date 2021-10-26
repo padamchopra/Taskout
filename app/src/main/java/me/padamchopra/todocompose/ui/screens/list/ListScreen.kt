@@ -1,6 +1,7 @@
 package me.padamchopra.todocompose.ui.screens.list
 
 import android.util.Log
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -14,6 +15,7 @@ import me.padamchopra.todocompose.ui.viewmodels.SharedViewModel
 import me.padamchopra.todocompose.util.Action
 import me.padamchopra.todocompose.util.SearchAppBarState
 
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
 fun ListScreen(

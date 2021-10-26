@@ -1,5 +1,6 @@
 package me.padamchopra.todocompose.navigation
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -10,6 +11,7 @@ import me.padamchopra.todocompose.navigation.destinations.taskComposable
 import me.padamchopra.todocompose.ui.viewmodels.SharedViewModel
 import me.padamchopra.todocompose.util.Constants.LIST_SCREEN
 
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
 fun SetupNavigation(
