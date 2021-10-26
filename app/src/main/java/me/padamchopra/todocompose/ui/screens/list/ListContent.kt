@@ -16,10 +16,26 @@ import me.padamchopra.todocompose.data.models.Priority
 import me.padamchopra.todocompose.data.models.ToDoTask
 import me.padamchopra.todocompose.ui.theme.*
 import me.padamchopra.todocompose.util.RequestState
+import me.padamchopra.todocompose.util.SearchAppBarState
 
 @ExperimentalMaterialApi
 @Composable
 fun ListContent(
+    allTasks: RequestState<List<ToDoTask>>,
+    searchedTasks: RequestState<List<ToDoTask>>,
+    searchAppBarState: SearchAppBarState,
+    navigateToTaskScreen: (taskId: Int) -> Unit
+) {
+    HandleListContent(
+        tasks = if (searchAppBarState == SearchAppBarState.TRIGGERED)
+            searchedTasks else allTasks,
+        navigateToTaskScreen = navigateToTaskScreen
+    )
+}
+
+@ExperimentalMaterialApi
+@Composable
+fun HandleListContent(
     tasks: RequestState<List<ToDoTask>>,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {

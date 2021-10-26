@@ -22,6 +22,7 @@ import me.padamchopra.todocompose.components.PriorityItem
 import me.padamchopra.todocompose.data.models.Priority
 import me.padamchopra.todocompose.ui.theme.*
 import me.padamchopra.todocompose.ui.viewmodels.SharedViewModel
+import me.padamchopra.todocompose.util.Action
 import me.padamchopra.todocompose.util.AppBarTrailingIconState
 import me.padamchopra.todocompose.util.SearchAppBarState
 
@@ -38,7 +39,9 @@ fun ListAppBar(
                     sharedViewModel.openSearchBar()
                 },
                 onSortClicked = {},
-                onDeleteClicked = {}
+                onDeleteClicked = {
+                    sharedViewModel.updateAction(Action.DELETE_ALL)
+                }
             )
         }
         else -> {
@@ -50,7 +53,9 @@ fun ListAppBar(
                 onCloseClicked = {
                     sharedViewModel.closeSearchBar()
                 },
-                onSearchClicked = {}
+                onSearchClicked = { query ->
+                    sharedViewModel.searchTasks(query)
+                }
             )
         }
     }
