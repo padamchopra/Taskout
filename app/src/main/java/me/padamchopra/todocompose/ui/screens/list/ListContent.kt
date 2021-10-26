@@ -24,13 +24,40 @@ fun ListContent(
     allTasks: RequestState<List<ToDoTask>>,
     searchedTasks: RequestState<List<ToDoTask>>,
     searchAppBarState: SearchAppBarState,
+    lowPriorityTasks: List<ToDoTask>,
+    highPriorityTasks: List<ToDoTask>,
+    sortState: RequestState<Priority>,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
-    HandleListContent(
-        tasks = if (searchAppBarState == SearchAppBarState.TRIGGERED)
-            searchedTasks else allTasks,
-        navigateToTaskScreen = navigateToTaskScreen
-    )
+
+    if (sortState is RequestState.Success) {
+        when {
+            searchAppBarState == SearchAppBarState.TRIGGERED -> {
+                HandleListContent(
+                    tasks = searchedTasks,
+                    navigateToTaskScreen = navigateToTaskScreen
+                )
+            }
+            sortState.data == Priority.NONE -> {
+                HandleListContent(
+                    tasks = allTasks,
+                    navigateToTaskScreen = navigateToTaskScreen
+                )
+            }
+            sortState.data == Priority.LOW -> {
+                HandleListContent(
+                    tasks = RequestState.Success(lowPriorityTasks),
+                    navigateToTaskScreen = navigateToTaskScreen
+                )
+            }
+            sortState.data == Priority.HIGH -> {
+                HandleListContent(
+                    tasks = RequestState.Success(highPriorityTasks),
+                    navigateToTaskScreen = navigateToTaskScreen
+                )
+            }
+        }
+    }
 }
 
 @ExperimentalMaterialApi
