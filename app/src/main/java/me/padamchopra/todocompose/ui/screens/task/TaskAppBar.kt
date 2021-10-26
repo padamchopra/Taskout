@@ -3,7 +3,7 @@ package me.padamchopra.todocompose.ui.screens.task
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -11,6 +11,7 @@ import me.padamchopra.todocompose.ui.theme.topAppBarBackgroundColor
 import me.padamchopra.todocompose.ui.theme.topAppBarContentColor
 import me.padamchopra.todocompose.util.Action
 import me.padamchopra.todocompose.R
+import me.padamchopra.todocompose.components.DisplayAlertDialog
 import me.padamchopra.todocompose.data.models.Priority
 import me.padamchopra.todocompose.data.models.ToDoTask
 import me.padamchopra.todocompose.ui.theme.ToDoComposeTheme
@@ -100,10 +101,35 @@ fun ExistingTaskAppBar(
         },
         backgroundColor = MaterialTheme.colors.topAppBarBackgroundColor,
         actions = {
-            DeleteAction(onDeleteClicked = navigateToListScreen)
-            UpdateAction(onUpdateClicked = navigateToListScreen)
+            ExistingTaskAppBarActions(
+                selectedTask = selectedTask,
+                navigateToListScreen = navigateToListScreen
+            )
         }
     )
+}
+
+@Composable
+fun ExistingTaskAppBarActions(
+    selectedTask: ToDoTask,
+    navigateToListScreen: (Action) -> Unit
+) {
+    var showDialog by remember {
+        mutableStateOf(false)
+    }
+
+    DisplayAlertDialog(
+        title = stringResource(id = R.string.delete_task, selectedTask.title),
+        message = stringResource(id = R.string.delete_task_confirmation),
+        showDialog = showDialog,
+        closeDialog = { showDialog = false },
+        onConfirmClicked = { navigateToListScreen(Action.DELETE) }
+    )
+
+    DeleteAction(onDeleteClicked = {
+        showDialog = true
+    })
+    UpdateAction(onUpdateClicked = navigateToListScreen)
 }
 
 @Composable
@@ -123,11 +149,9 @@ fun CloseAction(
 
 @Composable
 fun DeleteAction(
-    onDeleteClicked:(Action) -> Unit
+    onDeleteClicked:() -> Unit
 ) {
-    IconButton(onClick = {
-        onDeleteClicked(Action.DELETE)
-    }) {
+    IconButton(onClick = { onDeleteClicked() }) {
         Icon(
             imageVector = Icons.Filled.Delete,
             contentDescription = stringResource(id = R.string.delete_btn),

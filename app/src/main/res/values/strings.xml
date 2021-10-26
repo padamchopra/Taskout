@@ -18,4 +18,12 @@
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="task_invalid_error">Title and description cannot be left empty</string>
+
+    <string name="generic_yes">Yes</string>
+    <string name="generic_no">No</string>
+
+    <string name="delete_task">Remove \'%1$s\'?</string>
+    <string name="delete_task_confirmation">This task will be deleted and you will no longer be able to see it.</string>
+    <string name="delete_all_tasks">Remove all tasks?</string>
+    <string name="delete_all_tasks_confirmation">All of your saved tasks will be deleted. This action is not undoable.</string>
 </resources>

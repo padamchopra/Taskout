@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
+import me.padamchopra.todocompose.components.DisplayAlertDialog
 import me.padamchopra.todocompose.components.PriorityItem
 import me.padamchopra.todocompose.data.models.Priority
 import me.padamchopra.todocompose.ui.theme.*
@@ -91,9 +92,19 @@ fun ListAppBarActions(
     onSortClicked: (Priority) -> Unit,
     onDeleteClicked: () -> Unit
 ) {
+    var showDialog by remember { mutableStateOf(false) }
+
+    DisplayAlertDialog(
+        title = stringResource(id = R.string.delete_all_tasks),
+        message = stringResource(id = R.string.delete_all_tasks_confirmation),
+        showDialog = showDialog,
+        closeDialog = { showDialog = false },
+        onConfirmClicked = onDeleteClicked
+    )
+
     SearchAction(onSearchClicked = onSearchClicked)
     SortAction(onSortClicked = onSortClicked)
-    DeleteAllAction(onDeleteClicked = onDeleteClicked)
+    DeleteAllAction(onDeleteClicked = { showDialog = true })
 }
 
 @Composable
@@ -153,7 +164,7 @@ fun DeleteAllAction(
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    IconButton(onClick = { /*TODO*/ }) {
+    IconButton(onClick = { expanded = true }) {
         Icon(
             painter = painterResource(id = R.drawable.ic_more_vert),
             contentDescription = stringResource(id = R.string.delete_all),
