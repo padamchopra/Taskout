@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">To Do Compose</string>
+    <string name="app_name">Taskout</string>
 
     <string name="add_button">Add button</string>
     <string name="search_button">Search Tasks</string>
